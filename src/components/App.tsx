@@ -8,7 +8,7 @@ export const App: React.FC = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
-  const [tokenUser, setTokenUser] = useState<any>("");
+  const [tokenUser, setTokenUser] = useState<string | null>("");
 
   useEffect(() => {
     setTokenUser(localStorage.getItem("user"));
@@ -25,6 +25,8 @@ export const App: React.FC = () => {
       let token = Date.now().toString();
       localStorage.setItem("user", token);
     }
+
+    setTokenUser(localStorage.getItem("user"));
   };
 
   if (tokenUser) {
