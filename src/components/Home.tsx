@@ -6,14 +6,12 @@ export const Home: React.FC = () => {
   const { Search } = Input;
 
   async function searchYoutube(keywords: string) {
-    const maxResults = 12;
-    const key = "AIzaSyD9PgoqQw-WmEWkUNIgh03FJZi8qpag_gk";
+    // const maxResults = 12;
+    // const key = "AIzaSyD9PgoqQw-WmEWkUNIgh03FJZi8qpag_gk";
 
-    const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=${keywords}&key=${key}`;
+    // const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=${keywords}&key=${key}`;
 
-    console.log(url);
     console.log(keywords);
-
     // const video = await fetch(url, {
     //   method: "GET",
     //   headers: {
@@ -24,8 +22,6 @@ export const Home: React.FC = () => {
     // console.log(result);
   }
 
-  searchYoutube("keywords");
-
   return (
     <Container>
       <Search
@@ -33,7 +29,7 @@ export const Home: React.FC = () => {
         enterButton
         allowClear
         size="large"
-        onSearch={searchYoutube.bind(null, "str")}
+        onSearch={(value: string) => searchYoutube(value)}
       />
     </Container>
   );
