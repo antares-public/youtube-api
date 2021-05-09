@@ -2,27 +2,26 @@ import React, { useState } from "react";
 import { Input } from "antd";
 import { VideoList } from "./VideoList";
 import styled from "styled-components";
+import videoJSON from "../video.json";
 
 export const Home: React.FC = () => {
   const { Search } = Input;
 
-  const [res, setRes] = useState();
+  const [video, setVideo] = useState<any>();
 
   async function searchYoutube(keywords: string) {
     const maxResults = 12;
     const key = "AIzaSyD9PgoqQw-WmEWkUNIgh03FJZi8qpag_gk";
-
     const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=${keywords}&key=${key}`;
-
-    // console.log(keywords);
     const video = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
-    setRes(await video.json());
-    // console.log(result);
+    // setVideo(await video.json());
+
+    setVideo(videoJSON);
   }
 
   return (
@@ -34,7 +33,7 @@ export const Home: React.FC = () => {
         size="large"
         onSearch={(value: string) => searchYoutube(value)}
       />
-      <VideoList res={res} />
+      <VideoList video={video} />
     </Container>
   );
 };

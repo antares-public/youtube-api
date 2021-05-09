@@ -7,6 +7,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.my-1 {
-  margin: 10px 0;
+.mb-20 {
+  margin-bottom: 20px;
 }

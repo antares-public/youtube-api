@@ -36,23 +36,38 @@ export const App: React.FC = () => {
 
   return (
     <Center>
-      <Form onSubmit={logIn}>
-        <Input
-          placeholder="Basic usage"
-          value={login}
-          onChange={(e) => setLogin(e.target.value)}
+      <Container>
+        <img
+          className="mb-20"
+          src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+          width="50"
         />
+        <h1>Вход</h1>
+        <form onSubmit={logIn}>
+          <LogIn>
+            <label>Логин</label>
+            <Input
+              placeholder="Basic usage"
+              value={login}
+              size="large"
+              onChange={(e) => setLogin(e.target.value)}
+            />
+          </LogIn>
 
-        <Input.Password
-          className="my-1"
-          placeholder="input password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button type="primary" htmlType="submit">
-          Log In
-        </Button>
-      </Form>
+          <LogIn>
+            <label>Пароль</label>
+            <Input.Password
+              size="large"
+              placeholder="input password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </LogIn>
+          <Button type="primary" size="large" htmlType="submit">
+            Войти
+          </Button>
+        </form>
+      </Container>
     </Center>
   );
 };
@@ -61,9 +76,18 @@ const Center = styled.div`
   display: grid;
   place-items: center;
   height: 100vh;
+  text-align: center;
+  background-color: #e1e1e1;
 `;
 
-const Form = styled.form`
-  text-align: center;
-  max-width: 200px;
+const Container = styled.div`
+  max-width: 500px;
+
+  padding: 120px 100px;
+  background-color: #fff;
+  border-radius: 10px;
+`;
+
+const LogIn = styled.p`
+  text-align: left;
 `;
