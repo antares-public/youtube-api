@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input, Button } from "antd";
 import styled from "styled-components";
+import { Home } from "./Home";
 
 import users from "../users.json";
 
@@ -30,7 +31,7 @@ export const App: React.FC = () => {
   };
 
   if (tokenUser) {
-    return <div>dcd</div>;
+    return <Home />;
   }
 
   return (
@@ -41,6 +42,7 @@ export const App: React.FC = () => {
           value={login}
           onChange={(e) => setLogin(e.target.value)}
         />
+
         <Input.Password
           className="my-1"
           placeholder="input password"
@@ -63,5 +65,5 @@ const Center = styled.div`
 
 const Form = styled.form`
   text-align: center;
-  max-width: 300px;
+  max-width: 200px;
 `;
