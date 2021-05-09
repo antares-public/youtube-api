@@ -41,6 +41,7 @@ export const App: React.FC = () => {
           className="mb-20"
           src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
           width="50"
+          alt="logo"
         />
         <h1>Вход</h1>
         <form onSubmit={logIn}>
