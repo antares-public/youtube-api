@@ -7,8 +7,9 @@ import { Navbar } from "./Navbar";
 
 export const Home: React.FC = () => {
   const [video, setVideo] = useState<any>();
+  const [keywords, setKeywords] = useState<string>("");
 
-  async function searchYoutube(keywords: string) {
+  async function searchYoutube(query: string) {
     // const maxResults = 12;
     // const key = "AIzaSyD9PgoqQw-WmEWkUNIgh03FJZi8qpag_gk";
     // const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=${keywords}&key=${key}`;
@@ -20,9 +21,9 @@ export const Home: React.FC = () => {
     // });
     // setVideo(await video.json());
 
+    setKeywords(query);
     setVideo(videoJSON);
   }
-
   return (
     <Fragment>
       <Navbar />
@@ -35,7 +36,7 @@ export const Home: React.FC = () => {
           size="large"
           onSearch={(value: string) => searchYoutube(value)}
         />
-        <VideoList video={video} />
+        <VideoList keywords={keywords} video={video} />
       </Container>
     </Fragment>
   );
