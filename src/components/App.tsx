@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Input, Button } from "antd";
 import styled from "styled-components";
 import { Home } from "./Home";
 
+import { connect } from "react-redux";
+import { createNewToken } from "../Actions/createNewToken";
+
 import users from "../users.json";
 
-export const App: React.FC = () => {
+const App: React.FC<{ createNewToken: any; token: any }> = (props) => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
-  const [tokenUser, setTokenUser] = useState<string | null>("");
-
-  useEffect(() => {
-    setTokenUser(localStorage.getItem("user"));
-  }, []);
-
-  const logIn = (e: React.FormEvent<HTMLFormElement>) => {
+  const logIn = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     const check = users.filter(
@@ -24,15 +21,17 @@ export const App: React.FC = () => {
 
     if (check.length >= 1) {
       let token = Date.now().toString();
+      props.createNewToken(token);
       localStorage.setItem("user", token);
     }
-
-    setTokenUser(localStorage.getItem("user"));
   };
 
-  if (tokenUser) {
+  if (localStorage.getItem("user")) {
     return <Home />;
   }
+  // if (props.token) {
+  // return <Home />;
+  // }
 
   return (
     <Center>
@@ -44,7 +43,7 @@ export const App: React.FC = () => {
           alt="logo"
         />
         <h1>Вход</h1>
-        <form onSubmit={logIn}>
+        <form>
           <LogIn>
             <label>Логин</label>
             <Input
@@ -64,7 +63,7 @@ export const App: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </LogIn>
-          <Button type="primary" size="large" htmlType="submit">
+          <Button onClick={(e) => logIn(e)} type="primary" size="large">
             Войти
           </Button>
         </form>
@@ -72,6 +71,12 @@ export const App: React.FC = () => {
     </Center>
   );
 };
+
+const mapStateToProps = (state: any) => ({
+  token: state.token,
+});
+
+export default connect(mapStateToProps, { createNewToken })(App);
 
 const Center = styled.div`
   display: grid;

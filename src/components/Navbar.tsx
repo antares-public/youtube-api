@@ -1,6 +1,13 @@
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { removeToken } from "../Actions/removeToken";
 
-export const Navbar: React.FC = () => {
+const Navbar: React.FC<{ removeToken: any }> = (props) => {
+  const removeHandler = () => {
+    localStorage.removeItem("user");
+    props.removeToken();
+  };
+
   return (
     <Menu>
       <div>
@@ -14,11 +21,12 @@ export const Navbar: React.FC = () => {
         <Link href="#">Избранное</Link>
       </div>
       <div>
-        <Link href="#">Выйти</Link>
+        <Link onClick={() => removeHandler()}>Выйти</Link>
       </div>
     </Menu>
   );
 };
+export default connect(null, { removeToken })(Navbar);
 
 const Menu = styled.div`
   display: flex;

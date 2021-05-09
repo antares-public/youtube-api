@@ -3,15 +3,13 @@ import styled from "styled-components";
 
 export const VideoList: React.FC<{
   video: any;
-  keywords: any;
-}> = ({ video, keywords }) => {
+}> = ({ video }) => {
   return (
     <YoutubeList>
-      {keywords && <h1>Видео по запросу «{keywords}»</h1>}
       {video?.items?.map((e: any) => {
         return (
           <Item key={e.id.videoId}>
-            <img src={e.snippet.thumbnails.medium.url} alt="" />
+            <img src={e.snippet.thumbnails.medium.url} alt="" width="300" />
 
             <ItemContent>
               <a href={`https://youtu.be/${e.id.videoId}`}>{e.snippet.title}</a>
@@ -35,6 +33,8 @@ const YoutubeList = styled.div`
 
 const Item = styled.div`
   display: flex;
+
+  margin-bottom: 20px;
 `;
 
 const ItemContent = styled.div`

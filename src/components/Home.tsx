@@ -3,13 +3,17 @@ import { Input } from "antd";
 import { VideoList } from "./VideoList";
 import styled from "styled-components";
 import videoJSON from "../video.json";
-import { Navbar } from "./Navbar";
+import { MenuOutlined, TableOutlined } from "@ant-design/icons";
+
+import Navbar from "./Navbar";
 
 export const Home: React.FC = () => {
   const [video, setVideo] = useState<any>();
   const [keywords, setKeywords] = useState<string>("");
 
   async function searchYoutube(query: string) {
+    setKeywords(query);
+
     // const maxResults = 12;
     // const key = "AIzaSyD9PgoqQw-WmEWkUNIgh03FJZi8qpag_gk";
     // const url = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=${maxResults}&q=${keywords}&key=${key}`;
@@ -21,7 +25,6 @@ export const Home: React.FC = () => {
     // });
     // setVideo(await video.json());
 
-    setKeywords(query);
     setVideo(videoJSON);
   }
   return (
@@ -36,11 +39,30 @@ export const Home: React.FC = () => {
           size="large"
           onSearch={(value: string) => searchYoutube(value)}
         />
-        <VideoList keywords={keywords} video={video} />
+        <Header>
+          {keywords && <h1>Видео по запросу «{keywords}»</h1>}
+          <div>
+            <Line />
+            <Table />
+          </div>
+        </Header>
+        <VideoList video={video} />
       </Container>
     </Fragment>
   );
 };
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Line = styled(MenuOutlined)``;
+
+const Table = styled(TableOutlined)`
+  margin-left: 20px;
+`;
 
 const Container = styled.div`
   padding: 40px 300px;
