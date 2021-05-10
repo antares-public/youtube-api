@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { removeToken } from "../Actions/removeToken";
+import React from "react";
 
 const Navbar: React.FC<{ removeToken: any }> = (props) => {
   const removeHandler = () => {
@@ -26,6 +27,7 @@ const Navbar: React.FC<{ removeToken: any }> = (props) => {
     </Menu>
   );
 };
+
 export default connect(null, { removeToken })(Navbar);
 
 const Menu = styled.div`
