@@ -10,18 +10,21 @@ import Navbar from "./../components/Navbar";
 
 export const App: React.FC = () => (
   <Switch>
-    <Route path="/login" component={Login} />
+    <>
+      <Route path="/login" component={Login} />
 
-    <div>
-      <Navbar />
-      <Container>
-        <Route path="/search" exact component={Home} />
-        <Route path="/favorites" exact component={Favorites} />
-      </Container>
-    </div>
+      <div>
+        <Navbar />
+        <Container>
+          <Route path="/search" exact component={Home} />
+          <Route path="/" exact component={Home} />
+          <Route path="/favorites" exact component={Favorites} />
+        </Container>
+      </div>
+    </>
   </Switch>
 );
 
 const Container = styled.div`
-  padding: 0 100px;
+  padding: 40px 200px;
 `;

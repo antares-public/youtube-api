@@ -6,7 +6,7 @@ import { Input, Button } from "antd";
 import styled from "styled-components";
 
 import { createNewToken } from "../Actions/CreateNewToken";
-import { IState } from "../interfaces";
+import { ITokenState } from "../interfaces";
 import users from "../users.json";
 
 type LoginProps = {
@@ -69,8 +69,8 @@ const Login: React.FC<LoginProps> = ({ currentToken, createNewToken }) => {
     </Center>
   );
 };
-const mapStateToProps = (state: IState) => ({
-  currentToken: state.token,
+const mapStateToProps = (state: { auth: ITokenState }) => ({
+  currentToken: state.auth.token,
 });
 
 export default connect(mapStateToProps, { createNewToken })(Login);

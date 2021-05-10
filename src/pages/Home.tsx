@@ -1,11 +1,11 @@
 import React, { useState, Fragment } from "react";
-import { Input } from "antd";
+import { Input, Tooltip } from "antd";
 import { VideoList } from "../components/VideoList";
 import { VideoTable } from "../components/VideoTable";
 import styled from "styled-components";
-import { Redirect } from "react-router-dom";
+import { Redirect, NavLink } from "react-router-dom";
 import { MenuOutlined, TableOutlined, HeartTwoTone } from "@ant-design/icons";
-import { IState } from "../interfaces";
+import { ITokenState } from "../interfaces";
 
 import { connect } from "react-redux";
 
@@ -38,6 +38,10 @@ const Home: React.FC<{ currentToken?: string }> = ({ currentToken }) => {
     }
   }
 
+  const saveToFavorite = () => {
+    // в state => храниоище закинуть запрос keywords
+  };
+
   return (
     <Fragment>
       <Container>
@@ -45,9 +49,20 @@ const Home: React.FC<{ currentToken?: string }> = ({ currentToken }) => {
         <Search
           placeholder="Что нужно посмотреть?"
           enterButton="Найти"
-          allowClear
           size="large"
-          suffix={<Heart />}
+          suffix={
+            <Tooltip
+              placement="bottom"
+              title={() => (
+                <p>
+                  Поиск будет сохранен в разделе «Избранное»
+                  <br /> <NavLink to="/favorites">Перейти в избранное</NavLink>
+                </p>
+              )}
+            >
+              <Heart onClick={() => saveToFavorite()} />
+            </Tooltip>
+          }
           onSearch={(value: string) => searchYoutube(value)}
         />
         {video && (
@@ -71,13 +86,15 @@ const Home: React.FC<{ currentToken?: string }> = ({ currentToken }) => {
   );
 };
 
-const mapStateToProps = (state: IState) => ({
-  currentToken: state.token,
+const mapStateToProps = (state: { auth: ITokenState }) => ({
+  currentToken: state.auth.token,
 });
 
 export default connect(mapStateToProps, null)(Home);
 
-const Heart = styled(HeartTwoTone)``;
+const Heart = styled(HeartTwoTone)`
+  color: red;
+`;
 
 const Header = styled.div`
   display: flex;
@@ -92,7 +109,6 @@ const Table = styled(TableOutlined)`
 `;
 
 const Container = styled.div`
-  padding: 40px 100px;
   overflow-y: auto;
 
   text-align: center;

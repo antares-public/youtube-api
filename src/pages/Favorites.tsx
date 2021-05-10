@@ -1,17 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { IState } from "../interfaces";
+import { ITokenState } from "../interfaces";
 
 const Favorites: React.FC<{ currentToken?: string }> = ({ currentToken }) => {
   if (!currentToken) {
     return <Redirect to="/login" />;
   }
-  return <h1>Favorites</h1>;
+  return <h1>Избранное</h1>;
 };
 
-const mapStateToProps = (state: IState) => ({
-  currentToken: state.token,
+const mapStateToProps = (state: { auth: ITokenState }) => ({
+  currentToken: state.auth.token,
 });
 
 export default connect(mapStateToProps, null)(Favorites);
