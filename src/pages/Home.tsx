@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Input, Tooltip } from "antd";
 import { VideoList } from "../components/VideoList";
 import { VideoTable } from "../components/VideoTable";
@@ -8,10 +8,14 @@ import { MenuOutlined, TableOutlined, HeartTwoTone } from "@ant-design/icons";
 import { ITokenState } from "../interfaces";
 
 import { connect } from "react-redux";
+import { saveToFavorite } from "../Actions/SaveToFavorite";
 
-const Home: React.FC<{ currentToken?: string }> = ({ currentToken }) => {
+const Home: React.FC<{
+  currentToken?: string | null;
+  saveToFavorite: (keywords: string) => void;
+}> = ({ currentToken, saveToFavorite }) => {
   const [video, setVideo] = useState<any>();
-  const [keywords, setKeywords] = useState<string>("");
+  const [search, setSearch] = useState("");
 
   const [table, setTable] = useState<boolean>(false);
 
@@ -20,8 +24,6 @@ const Home: React.FC<{ currentToken?: string }> = ({ currentToken }) => {
   }
 
   async function searchYoutube(query: string) {
-    setKeywords(query);
-
     const maxResults = 12;
     const key = "AIzaSyD9PgoqQw-WmEWkUNIgh03FJZi8qpag_gk";
     let url = `https://youtube.googleapis.com/youtube/v3/search?order=viewCount&type=video&part=snippet&maxResults=${maxResults}&q=${query}&key=${key}`;
@@ -38,8 +40,8 @@ const Home: React.FC<{ currentToken?: string }> = ({ currentToken }) => {
     }
   }
 
-  const saveToFavorite = () => {
-    // в state => храниоище закинуть запрос keywords
+  const saveImportantSearch = () => {
+    saveToFavorite(search);
   };
 
   return (
@@ -60,15 +62,17 @@ const Home: React.FC<{ currentToken?: string }> = ({ currentToken }) => {
                 </p>
               )}
             >
-              <Heart onClick={() => saveToFavorite()} />
+              <Heart onClick={() => saveImportantSearch()} />
             </Tooltip>
           }
-          onSearch={(value: string) => searchYoutube(value)}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onSearch={() => searchYoutube(search)}
         />
         {video && (
           <>
             <Header>
-              {keywords && <h1>Видео по запросу «{keywords}»</h1>}
+              {search && <h1>Видео по запросу «{search}»</h1>}
               <div>
                 <Line onClick={() => setTable(false)} />
                 <Table onClick={() => setTable(true)} />
@@ -90,7 +94,7 @@ const mapStateToProps = (state: { auth: ITokenState }) => ({
   currentToken: state.auth.token,
 });
 
-export default connect(mapStateToProps, null)(Home);
+export default connect(mapStateToProps, { saveToFavorite })(Home);
 
 const Heart = styled(HeartTwoTone)`
   color: red;
