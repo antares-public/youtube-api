@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment } from "react";
 import { Input, Tooltip } from "antd";
 import { VideoList } from "../components/VideoList";
 import { VideoTable } from "../components/VideoTable";
@@ -13,7 +13,8 @@ import { saveToFavorite } from "../Actions/SaveToFavorite";
 const Home: React.FC<{
   currentToken?: string | null;
   saveToFavorite: (keywords: string) => void;
-}> = ({ currentToken, saveToFavorite }) => {
+  important: [];
+}> = ({ currentToken, saveToFavorite, important }) => {
   const [video, setVideo] = useState<any>();
   const [search, setSearch] = useState("");
 
@@ -40,8 +41,10 @@ const Home: React.FC<{
     }
   }
 
-  const saveImportantSearch = () => {
-    saveToFavorite(search);
+  const saveImportantSearch = async () => {
+    await saveToFavorite(search);
+
+    localStorage.setItem("favorite", JSON.stringify(important));
   };
 
   return (
@@ -90,8 +93,9 @@ const Home: React.FC<{
   );
 };
 
-const mapStateToProps = (state: { auth: ITokenState }) => ({
+const mapStateToProps = (state: { auth: ITokenState; important: [] }) => ({
   currentToken: state.auth.token,
+  important: state.important,
 });
 
 export default connect(mapStateToProps, { saveToFavorite })(Home);
