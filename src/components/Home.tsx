@@ -18,7 +18,7 @@ export const Home: React.FC = () => {
 
     const maxResults = 12;
     const key = "AIzaSyD9PgoqQw-WmEWkUNIgh03FJZi8qpag_gk";
-    let url = `https://youtube.googleapis.com/youtube/v3/search?type=video&part=snippet&maxResults=${maxResults}&q=${keywords}&key=${key}`;
+    let url = `https://youtube.googleapis.com/youtube/v3/search?order=viewCount&type=video&part=snippet&maxResults=${maxResults}&q=${query}&key=${key}`;
     if (!query) {
       setVideo("");
     } else {
@@ -53,7 +53,6 @@ export const Home: React.FC = () => {
                 <Table onClick={() => setTable(true)} />
               </div>
             </Header>
-            {/* <VideoList video={video} /> */}
             {!table ? (
               <VideoList video={video} />
             ) : (

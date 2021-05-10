@@ -12,9 +12,17 @@ export const VideoList: React.FC<{
             <img src={e.snippet.thumbnails.medium.url} alt="" width="300" />
 
             <ItemContent>
-              <a href={`https://youtu.be/${e.id.videoId}`}>{e.snippet.title}</a>
+              <a
+                href={`https://youtu.be/${e.id.videoId}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {e.snippet.title}
+              </a>
               <a
                 href={`https://www.youtube.com/channel/${e.snippet.channelId}`}
+                target="_blank"
+                rel="noreferrer"
               >
                 {e.snippet.channelTitle}
               </a>
@@ -46,5 +54,9 @@ const ItemContent = styled.div`
   > a {
     color: #333;
     font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
