@@ -1,14 +1,12 @@
-import styled from "styled-components";
-import { connect } from "react-redux";
-import { removeToken } from "../Actions/removeToken";
 import React from "react";
+import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 
-const Navbar: React.FC<{ removeToken: any }> = (props) => {
-  const removeHandler = () => {
-    localStorage.removeItem("user");
-    props.removeToken();
-  };
+import styled from "styled-components";
 
+import { removeToken } from "../Actions/RemoveToken";
+
+const Navbar: React.FC<{ removeToken: () => void }> = ({ removeToken }) => {
   return (
     <Menu>
       <div>
@@ -18,11 +16,25 @@ const Navbar: React.FC<{ removeToken: any }> = (props) => {
           alt="logo"
           style={{ paddingRight: "20px" }}
         />
-        <Link href="#">Поиск</Link>
-        <Link href="#">Избранное</Link>
+        <NavLink
+          to="/search"
+          className="nav_link"
+          activeClassName="link_active"
+        >
+          Поиск
+        </NavLink>
+        <NavLink
+          to="/favorites"
+          className="nav_link"
+          activeClassName="link_active"
+        >
+          Избранное
+        </NavLink>
       </div>
       <div>
-        <Link onClick={() => removeHandler()}>Выйти</Link>
+        <button className="nav_link" onClick={() => removeToken()}>
+          Выйти
+        </button>
       </div>
     </Menu>
   );
@@ -36,17 +48,4 @@ const Menu = styled.div`
   align-items: center;
   height: 60px;
   padding: 0 150px;
-`;
-
-const Link = styled.a`
-  display: inline;
-  color: #1890ff;
-  border-bottom: 1px solid transparent;
-  transition: 0.5s;
-  padding: 20px;
-  font-weight: 600;
-
-  &:hover {
-    border-bottom: 1px solid #1890ff;
-  }
 `;

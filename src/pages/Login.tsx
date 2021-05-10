@@ -1,19 +1,25 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+
 import { Input, Button } from "antd";
 import styled from "styled-components";
-import { Home } from "./Home";
 
-import { connect } from "react-redux";
-import { createNewToken } from "../Actions/createNewToken";
-
+import { createNewToken } from "../Actions/CreateNewToken";
+import { IState } from "../interfaces";
 import users from "../users.json";
 
-const Login: React.FC<{ createNewToken: any; token: any }> = (props) => {
+type LoginProps = {
+  currentToken?: string | null;
+  createNewToken: (token: string) => void;
+};
+
+const Login: React.FC<LoginProps> = ({ currentToken, createNewToken }) => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
-  if (localStorage.getItem("user")) {
-    return <Home />;
+  if (currentToken) {
+    return <Redirect to="/search" />;
   }
 
   const logIn = (e: React.MouseEvent<HTMLElement>) => {
@@ -22,12 +28,7 @@ const Login: React.FC<{ createNewToken: any; token: any }> = (props) => {
     const check = users.filter(
       (user) => user.login === login && user.password === password
     );
-
-    if (check.length >= 1) {
-      let token = Date.now().toString();
-      props.createNewToken(token);
-      localStorage.setItem("user", token);
-    }
+    if (check.length >= 1) createNewToken(Date.now().toString());
   };
 
   return (
@@ -41,25 +42,25 @@ const Login: React.FC<{ createNewToken: any; token: any }> = (props) => {
         />
         <h1>Вход</h1>
         <form>
-          <LogIn>
+          <div style={{ textAlign: "left" }}>
             <label>Логин</label>
             <Input
-              placeholder="Basic usage"
-              value={login}
+              style={{ marginBottom: "10px" }}
               size="large"
+              value={login}
               onChange={(e) => setLogin(e.target.value)}
+              placeholder="Логин"
             />
-          </LogIn>
 
-          <LogIn>
             <label>Пароль</label>
             <Input.Password
+              style={{ marginBottom: "20px" }}
               size="large"
-              placeholder="input password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Пароль"
             />
-          </LogIn>
+          </div>
           <Button onClick={(e) => logIn(e)} type="primary" size="large">
             Войти
           </Button>
@@ -68,9 +69,8 @@ const Login: React.FC<{ createNewToken: any; token: any }> = (props) => {
     </Center>
   );
 };
-
-const mapStateToProps = (state: any) => ({
-  token: state.token,
+const mapStateToProps = (state: IState) => ({
+  currentToken: state.token,
 });
 
 export default connect(mapStateToProps, { createNewToken })(Login);
@@ -89,8 +89,4 @@ const Container = styled.div`
   padding: 120px 100px;
   background-color: #fff;
   border-radius: 10px;
-`;
-
-const LogIn = styled.p`
-  text-align: left;
 `;

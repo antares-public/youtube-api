@@ -1,17 +1,23 @@
 import React, { useState, Fragment } from "react";
 import { Input } from "antd";
-import { VideoList } from "./VideoList";
-import { VideoTable } from "./VideoTable";
+import { VideoList } from "../components/VideoList";
+import { VideoTable } from "../components/VideoTable";
 import styled from "styled-components";
-import videoJSON from "../video.json";
-import { MenuOutlined, TableOutlined } from "@ant-design/icons";
-import Navbar from "./Navbar";
+import { Redirect } from "react-router-dom";
+import { MenuOutlined, TableOutlined, HeartTwoTone } from "@ant-design/icons";
+import { IState } from "../interfaces";
 
-export const Home: React.FC = () => {
+import { connect } from "react-redux";
+
+const Home: React.FC<{ currentToken?: string }> = ({ currentToken }) => {
   const [video, setVideo] = useState<any>();
   const [keywords, setKeywords] = useState<string>("");
 
   const [table, setTable] = useState<boolean>(false);
+
+  if (!currentToken) {
+    return <Redirect to="/login" />;
+  }
 
   async function searchYoutube(query: string) {
     setKeywords(query);
@@ -34,14 +40,14 @@ export const Home: React.FC = () => {
 
   return (
     <Fragment>
-      <Navbar />
       <Container>
         <h1 className="mb-20">Поиск видео</h1>
         <Search
-          placeholder="input search text"
-          enterButton="Search"
+          placeholder="Что нужно посмотреть?"
+          enterButton="Найти"
           allowClear
           size="large"
+          suffix={<Heart />}
           onSearch={(value: string) => searchYoutube(value)}
         />
         {video && (
@@ -64,6 +70,14 @@ export const Home: React.FC = () => {
     </Fragment>
   );
 };
+
+const mapStateToProps = (state: IState) => ({
+  currentToken: state.token,
+});
+
+export default connect(mapStateToProps, null)(Home);
+
+const Heart = styled(HeartTwoTone)``;
 
 const Header = styled.div`
   display: flex;

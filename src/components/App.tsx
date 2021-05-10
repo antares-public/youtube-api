@@ -1,10 +1,27 @@
 import React from "react";
-import Login from "./LogIn";
+import { Route, Switch } from "react-router-dom";
 
-const App: React.FC = () => {
- 
+import styled from "styled-components";
 
-  return <Login />;
-};
+import Login from "../pages/Login";
+import Home from "../pages/Home";
+import Favorites from "../pages/Favorites";
+import Navbar from "./../components/Navbar";
 
-export default App;
+export const App: React.FC = () => (
+  <Switch>
+    <Route path="/login" component={Login} />
+
+    <div>
+      <Navbar />
+      <Container>
+        <Route path="/search" exact component={Home} />
+        <Route path="/favorites" exact component={Favorites} />
+      </Container>
+    </div>
+  </Switch>
+);
+
+const Container = styled.div`
+  padding: 0 100px;
+`;
