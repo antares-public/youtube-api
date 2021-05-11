@@ -22,8 +22,8 @@ const Home: React.FC<{
   const [table, setTable] = useState<boolean>(false);
 
   // useEffect(() => {
-  //   saveToFavorite(search);
-  // }, [search]);
+  //   JSON.parse(localStorage.getItem("favorite") || "[]");
+  // }, [currentToken]); WORKING
 
   if (!currentToken) {
     return <Redirect to="/login" />;
@@ -47,7 +47,7 @@ const Home: React.FC<{
   }
 
   const saveImportantSearch = async () => {
-    important.push({ keywords: search });
+    important.push({ id: Date.now(), keywords: search });
     await localStorage.setItem("favorite", JSON.stringify(important));
   };
 

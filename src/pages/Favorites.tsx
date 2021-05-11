@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { ITokenState } from "../interfaces";
@@ -9,23 +9,35 @@ const Favorites: React.FC<{ currentToken?: string; important: [] }> = ({
   currentToken,
   important,
 }) => {
-  const [hover, setHover] = useState(false);
-
   if (!currentToken) {
     return <Redirect to="/login" />;
   }
+
+  const removeHandler = (id: number) => {
+    console.log(important.filter((e: { id: number }) => e.id !== id));
+  };
+
+  const changeHandler = () => {
+    console.log("change");
+  };
+
   return (
     <>
       <Navbar />
       <Container>
         <h1>Избранное</h1>
         <FavoritesList>
-          {important?.map((e: { keywords: string }, i: number) => (
+          {important?.map((e: { id: number; keywords: string }, i: number) => (
             <div className="active" key={i}>
               {e.keywords}
               <div className="hover">
-                <a>Изменить</a>
-                <a style={{ marginLeft: "10px", color: "red" }}>Удалить</a>
+                <a onClick={changeHandler}>Изменить</a>
+                <a
+                  onClick={() => removeHandler(e.id)}
+                  style={{ marginLeft: "10px", color: "red" }}
+                >
+                  Удалить
+                </a>
               </div>
             </div>
           ))}
