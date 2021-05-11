@@ -4,17 +4,17 @@ import { Redirect } from "react-router-dom";
 import { ITokenState } from "../interfaces";
 import Navbar from "./../components/Navbar";
 import styled from "styled-components";
+import { deleteImportant } from "../Actions/DeleteImportant";
 
-const Favorites: React.FC<{ currentToken?: string; important: [] }> = ({
-  currentToken,
-  important,
-}) => {
+const Favorites = ({ currentToken, important, deleteImportant }: any) => {
   if (!currentToken) {
     return <Redirect to="/login" />;
   }
 
   const removeHandler = (id: number) => {
-    console.log(important.filter((e: { id: number }) => e.id !== id));
+    // console.log(important.filter((e: { id: number }) => e.id !== id));
+    // полученный массив отправить в localstorage и в dispatch отравить в state
+    deleteImportant(important.filter((e: { id: number }) => e.id !== id));
   };
 
   const changeHandler = () => {
@@ -52,7 +52,7 @@ const mapStateToProps = (state: { auth: ITokenState; important: [] }) => ({
   important: state.important,
 });
 
-export default connect(mapStateToProps, null)(Favorites);
+export default connect(mapStateToProps, { deleteImportant })(Favorites);
 
 const Container = styled.div`
   padding: 40px 200px;
