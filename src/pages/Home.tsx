@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Input, Tooltip } from "antd";
 import { VideoList } from "../components/VideoList";
 import { VideoTable } from "../components/VideoTable";
@@ -13,12 +13,16 @@ import { saveToFavorite } from "../Actions/SaveToFavorite";
 const Home: React.FC<{
   currentToken?: string | null;
   saveToFavorite: (keywords: string) => void;
-  important: [];
+  important: any;
 }> = ({ currentToken, saveToFavorite, important }) => {
   const [video, setVideo] = useState<any>();
   const [search, setSearch] = useState("");
 
   const [table, setTable] = useState<boolean>(false);
+
+  // useEffect(() => {
+  //   saveToFavorite(search);
+  // }, [search]);
 
   if (!currentToken) {
     return <Redirect to="/login" />;
@@ -42,9 +46,8 @@ const Home: React.FC<{
   }
 
   const saveImportantSearch = async () => {
-    await saveToFavorite(search);
-
-    localStorage.setItem("favorite", JSON.stringify(important));
+    important.push({ keywords: search });
+    await localStorage.setItem("favorite", JSON.stringify(important));
   };
 
   return (
