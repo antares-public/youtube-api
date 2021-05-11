@@ -4,6 +4,6 @@ export const deleteImportant = (important: any) => (dispatch: any) => {
   localStorage.setItem("favorite", JSON.stringify(important));
   dispatch({
     type: DELETE_FAVORITE,
-    important,
+    payload: important,
   });
 };
