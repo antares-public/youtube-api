@@ -32,8 +32,10 @@ const EditSearch: React.FC<{
   const editHandler = async () => {
     await editFavorite({
       id,
-      keywords: keywords,
-      name: name.current.input.value,
+      keywords: keywords ? keywords : important[0].keywords,
+      name: name.current.input.value
+        ? name.current.input.value
+        : important[0].keywords,
       count: inputValue,
     });
 

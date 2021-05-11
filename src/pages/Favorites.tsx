@@ -5,6 +5,7 @@ import { ITokenState } from "../interfaces";
 import Navbar from "./../components/Navbar";
 import styled from "styled-components";
 import { deleteImportant } from "../Actions/DeleteImportant";
+import { IFavoriteState } from "../interfaces";
 
 const Favorites = ({ currentToken, important, deleteImportant }: any) => {
   let history = useHistory();
@@ -26,13 +27,15 @@ const Favorites = ({ currentToken, important, deleteImportant }: any) => {
       <Container>
         <h1>Избранное</h1>
         <FavoritesList>
-          {important?.map((e: { id: number; keywords: string }) => (
+          {important?.map((e: IFavoriteState) => (
             <div className="active" key={e.id}>
-              {e.keywords}
+              {e.name}
               <div className="hover">
-                <button onClick={() => changeHandler(e.id)}>Изменить</button>
+                <button onClick={() => changeHandler(Number(e.id))}>
+                  Изменить
+                </button>
                 <button
-                  onClick={() => removeHandler(e.id)}
+                  onClick={() => removeHandler(Number(e.id))}
                   style={{ marginLeft: "10px", color: "red" }}
                 >
                   Удалить
