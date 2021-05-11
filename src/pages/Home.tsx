@@ -7,15 +7,15 @@ import { Redirect, NavLink } from "react-router-dom";
 import { MenuOutlined, TableOutlined, HeartTwoTone } from "@ant-design/icons";
 import { ITokenState } from "../interfaces";
 import Navbar from "./../components/Navbar";
+import { IFavoriteState } from "../interfaces";
 
 import { connect } from "react-redux";
 import { saveToFavorite } from "../Actions/SaveToFavorite";
 
 const Home: React.FC<{
   currentToken?: string | null;
-  saveToFavorite: (keywords: string) => void;
-  important: any;
-}> = ({ currentToken, saveToFavorite, important }) => {
+  important: IFavoriteState[];
+}> = ({ currentToken, important }) => {
   const [video, setVideo] = useState<any>();
   const [search, setSearch] = useState("");
 
@@ -43,7 +43,12 @@ const Home: React.FC<{
   }
 
   const saveImportantSearch = async () => {
-    important.push({ id: Date.now(), keywords: search });
+    important.push({
+      id: Date.now().toString(),
+      keywords: search,
+      count: 12,
+      name: search,
+    });
     await localStorage.setItem("favorite", JSON.stringify(important));
   };
 

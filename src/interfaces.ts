@@ -10,10 +10,10 @@ export interface ITokenAction {
 
 // Favorite State
 export interface IFavoriteState {
-  count: number;
+  count?: number;
   id: string;
   keywords: string;
-  name: string;
+  name?: string;
 }
 
 export interface IFavoriteAction {

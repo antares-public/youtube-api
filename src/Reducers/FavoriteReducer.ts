@@ -22,7 +22,7 @@ export default function FavoriteReducer(
     case DELETE_FAVORITE:
       return JSON.parse(localStorage.getItem("favorite") || "[]");
     case EDIT_FAVORITE:
-      return state.map((e: any) => {
+      return state.map((e: { id: string }) => {
         if (Number(action.payload.id) === Number(e.id)) {
           e = action.payload;
           return e;

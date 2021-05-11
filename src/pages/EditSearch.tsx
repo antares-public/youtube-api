@@ -4,23 +4,25 @@ import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { editFavorite } from "../Actions/editImportant";
 import { Input, Button, Slider, Select, Col, Row, InputNumber } from "antd";
+import { IFavoriteState } from "../interfaces";
 
-const EditSearch: React.FC<{ important: any; editFavorite: any }> = ({
-  important,
-  editFavorite,
-}) => {
-  let { id } = useParams<any>();
+const EditSearch: React.FC<{
+  important: IFavoriteState[] | any;
+  editFavorite: (search: IFavoriteState) => void;
+}> = ({ important, editFavorite }) => {
   const { Option } = Select;
-  const [inputValue, setInputValue] = useState(12);
 
-  const query = useRef<any>();
+  let { id } = useParams<{ id: string }>();
   const name = useRef<any>();
 
-  let [currentSerch, setCurrentSearch]: any = useState({});
+  const [inputValue, setInputValue] = useState(12);
+
+  const [keywords, setKeywords] = useState({ ...important.keywords });
+
   const history = useHistory();
 
   useEffect(() => {
-    important.filter((e: any) => e.id === id && setCurrentSearch(e));
+    important.filter((e: { id: string }) => e.id === id && setKeywords(e));
   }, [important, id]);
 
   useEffect(() => {
@@ -29,8 +31,8 @@ const EditSearch: React.FC<{ important: any; editFavorite: any }> = ({
 
   const editHandler = async () => {
     await editFavorite({
-      id: id,
-      keywords: query.current.input.value,
+      id,
+      keywords: keywords,
       name: name.current.input.value,
       count: inputValue,
     });
@@ -49,8 +51,8 @@ const EditSearch: React.FC<{ important: any; editFavorite: any }> = ({
             <Input
               style={{ marginBottom: "10px" }}
               size="large"
-              ref={query}
-              placeholder={currentSerch.keywords}
+              placeholder={keywords.keywords}
+              onChange={(e: any) => setKeywords(e.target.value)}
             />
 
             <label>Название</label>
