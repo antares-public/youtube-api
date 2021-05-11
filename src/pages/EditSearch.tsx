@@ -7,7 +7,7 @@ import { Input, Button, Slider, Select, Col, Row, InputNumber } from "antd";
 const EditSearch: React.FC<{ important: any }> = ({ important }) => {
   let { id } = useParams<any>();
   const { Option } = Select;
-  const [inputValue, setInputValue] = useState(1);
+  const [inputValue, setInputValue] = useState(12);
 
   let currentSerch: any = {};
   important.filter((e: any) => (e.id == id ? (currentSerch = e) : null));
@@ -34,8 +34,13 @@ const EditSearch: React.FC<{ important: any }> = ({ important }) => {
             />
 
             <label>Сортировать по</label>
-            <Select style={{ marginBottom: "20px", width: "100%" }} allowClear>
-              <Option value="lucy">Lucy</Option>
+            <Select
+              defaultValue="default"
+              disabled
+              style={{ marginBottom: "20px", width: "100%" }}
+              allowClear
+            >
+              <Option value="default">Без сортировки</Option>
             </Select>
 
             <label>Максимальное количество</label>
@@ -54,14 +59,19 @@ const EditSearch: React.FC<{ important: any }> = ({ important }) => {
                   max={20}
                   style={{ margin: "0 16px" }}
                   value={inputValue}
-                  onChange={(e: any) => setInputValue(e.target.value)}
+                  onChange={(value: any) => setInputValue(value)}
                 />
               </Col>
             </Row>
           </div>
-          <Button type="primary" size="large">
-            Сохранить
-          </Button>
+          <div>
+            <SaveBtn type="primary" size="large">
+              Сохранить
+            </SaveBtn>
+            <SaveBtn type="default" size="large">
+              Не сохранять
+            </SaveBtn>
+          </div>
         </form>
       </Container>
     </Center>
@@ -90,4 +100,8 @@ const Container = styled.div`
   background-color: #fff;
 
   border-radius: 10px;
+`;
+
+const SaveBtn = styled(Button)`
+  margin-right: 10px;
 `;
