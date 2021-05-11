@@ -32,10 +32,8 @@ const EditSearch: React.FC<{
   const editHandler = async () => {
     await editFavorite({
       id,
-      keywords: keywords ? keywords : important[0].keywords,
-      name: name.current.input.value
-        ? name.current.input.value
-        : important[0].keywords,
+      keywords,
+      name: name.current.input.value,
       count: inputValue,
     });
 
@@ -97,7 +95,12 @@ const EditSearch: React.FC<{
             </Row>
           </div>
           <div>
-            <SaveBtn type="primary" size="large" onClick={() => editHandler()}>
+            <SaveBtn
+              disabled={!keywords || !name?.current?.input.value}
+              type="primary"
+              size="large"
+              onClick={() => editHandler()}
+            >
               Сохранить
             </SaveBtn>
             <SaveBtn

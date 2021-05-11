@@ -10,7 +10,6 @@ import Navbar from "./../components/Navbar";
 import { IFavoriteState } from "../interfaces";
 
 import { connect } from "react-redux";
-import { saveToFavorite } from "../Actions/SaveToFavorite";
 
 const Home: React.FC<{
   currentToken?: string | null;
@@ -104,7 +103,7 @@ const mapStateToProps = (state: { auth: ITokenState; important: [] }) => ({
   important: state.important,
 });
 
-export default connect(mapStateToProps, { saveToFavorite })(Home);
+export default connect(mapStateToProps, null)(Home);
 
 const Heart = styled(HeartTwoTone)``;
 
