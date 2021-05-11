@@ -1,4 +1,4 @@
-import { SAVE_TO_FAVORITE } from "../Actions/ActionTypes";
+import { SAVE_TO_FAVORITE, CLEAR_DATA } from "../Actions/ActionTypes";
 
 export default function FavoriteReducer(
   state = JSON.parse(localStorage.getItem("favorite") || "[]"),
@@ -7,6 +7,8 @@ export default function FavoriteReducer(
   switch (action.type) {
     case SAVE_TO_FAVORITE:
       return [...state, { keywords: action.keywords }];
+    case CLEAR_DATA:
+      return [];
     default:
       return state;
   }

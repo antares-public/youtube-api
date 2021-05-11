@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { Redirect, NavLink } from "react-router-dom";
 import { MenuOutlined, TableOutlined, HeartTwoTone } from "@ant-design/icons";
 import { ITokenState } from "../interfaces";
+import Navbar from "./../components/Navbar";
 
 import { connect } from "react-redux";
 import { saveToFavorite } from "../Actions/SaveToFavorite";
@@ -52,6 +53,7 @@ const Home: React.FC<{
 
   return (
     <Fragment>
+      <Navbar />
       <Container>
         <h1 className="mb-20">Поиск видео</h1>
         <Search
@@ -103,9 +105,7 @@ const mapStateToProps = (state: { auth: ITokenState; important: [] }) => ({
 
 export default connect(mapStateToProps, { saveToFavorite })(Home);
 
-const Heart = styled(HeartTwoTone)`
-  color: red;
-`;
+const Heart = styled(HeartTwoTone)``;
 
 const Header = styled.div`
   display: flex;
@@ -123,6 +123,7 @@ const Container = styled.div`
   overflow-y: auto;
 
   text-align: center;
+  padding: 40px 200px;
 `;
 const Search = styled(Input.Search)`
   margin-bottom: 20px;

@@ -80,7 +80,7 @@ const Center = styled.div`
   place-items: center;
   height: 100vh;
   text-align: center;
-  background-color: #e1e1e1;
+  /* background-color: #e1e1e1; */
 `;
 
 const Container = styled.div`

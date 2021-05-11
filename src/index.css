@@ -6,6 +6,12 @@ body {
   margin-bottom: 20px;
 }
 
+p,
+h1 {
+  padding: 0;
+  margin: 0;
+}
+
 /* Navigation */
 .nav_link {
   display: inline;
@@ -15,6 +21,7 @@ body {
   border-bottom: 1px solid transparent;
   transition: 0.5s;
   padding: 20px;
+  height: 55px;
   font-weight: 600;
 }
 
@@ -24,4 +31,13 @@ body {
 
 .link_active {
   border-bottom: 1px solid #1890ff;
+}
+
+/* Favorite Link */
+.hover {
+  display: none;
+}
+
+.active:hover .hover {
+  display: block;
 }

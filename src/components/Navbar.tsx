@@ -46,6 +46,8 @@ const Menu = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px;
+  height: 55px;
   padding: 0 150px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(150, 150, 150, 0.5);
 `;

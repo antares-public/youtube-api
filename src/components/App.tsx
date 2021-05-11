@@ -6,7 +6,6 @@ import styled from "styled-components";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
 import Favorites from "../pages/Favorites";
-import Navbar from "./../components/Navbar";
 
 export const App: React.FC = () => (
   <Switch>
@@ -14,12 +13,12 @@ export const App: React.FC = () => (
       <Route path="/login" component={Login} />
 
       <div>
-        <Navbar />
-        <Container>
-          <Route path="/search" exact component={Home} />
-          <Route path="/" exact component={Home} />
-          <Route path="/favorites" exact component={Favorites} />
-        </Container>
+        {/* <Navbar /> */}
+        {/* <Container> */}
+        <Route path="/search" exact component={Home} />
+        <Route path="/" exact component={Home} />
+        <Route path="/favorites" exact component={Favorites} />
+        {/* </Container> */}
       </div>
     </>
   </Switch>
