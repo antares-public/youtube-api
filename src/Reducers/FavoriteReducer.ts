@@ -2,11 +2,12 @@ import {
   SAVE_TO_FAVORITE,
   CLEAR_DATA,
   DELETE_FAVORITE,
+  EDIT_FAVORITE,
 } from "../Actions/ActionTypes";
 
 export default function FavoriteReducer(
   state = JSON.parse(localStorage.getItem("favorite") || "[]"),
-  action: { type: string; keywords: string }
+  action: any
 ) {
   switch (action.type) {
     case SAVE_TO_FAVORITE:
@@ -15,6 +16,14 @@ export default function FavoriteReducer(
       return [];
     case DELETE_FAVORITE:
       return JSON.parse(localStorage.getItem("favorite") || "[]");
+    case EDIT_FAVORITE:
+      return state.map((e: any) => {
+        if (action.search.id == e.id) {
+          e = action.search;
+          return e;
+        }
+        return e;
+      });
     default:
       return state;
   }

@@ -1,16 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
+import { editFavorite } from "../Actions/editImportant";
 import { Input, Button, Slider, Select, Col, Row, InputNumber } from "antd";
 
-const EditSearch: React.FC<{ important: any }> = ({ important }) => {
+const EditSearch: React.FC<{ important: any; editFavorite: any }> = ({
+  important,
+  editFavorite,
+}) => {
   let { id } = useParams<any>();
   const { Option } = Select;
   const [inputValue, setInputValue] = useState(12);
 
-  let currentSerch: any = {};
-  important.filter((e: any) => (e.id == id ? (currentSerch = e) : null));
+  const query = useRef<any>();
+  const name = useRef<any>();
+
+  let [currentSerch, setCurrentSearch]: any = useState({});
+  const history = useHistory();
+
+  useEffect(() => {
+    important.filter((e: any) => e.id == id && setCurrentSearch(e));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("favorite", JSON.stringify(important));
+  }, [important]);
+
+  const editHandler = async () => {
+    await editFavorite({
+      id: id,
+      keywords: query.current.input.value,
+      name: name.current.input.value,
+      count: inputValue,
+    });
+
+    history.push("/favorites");
+  };
 
   return (
     <Center>
@@ -23,11 +49,13 @@ const EditSearch: React.FC<{ important: any }> = ({ important }) => {
             <Input
               style={{ marginBottom: "10px" }}
               size="large"
+              ref={query}
               placeholder={currentSerch.keywords}
             />
 
             <label>Название</label>
             <Input
+              ref={name}
               style={{ marginBottom: "20px" }}
               size="large"
               placeholder="Укажите название"
@@ -65,10 +93,14 @@ const EditSearch: React.FC<{ important: any }> = ({ important }) => {
             </Row>
           </div>
           <div>
-            <SaveBtn type="primary" size="large">
+            <SaveBtn type="primary" size="large" onClick={() => editHandler()}>
               Сохранить
             </SaveBtn>
-            <SaveBtn type="default" size="large">
+            <SaveBtn
+              type="default"
+              size="large"
+              onClick={() => history.push("/favorites")}
+            >
               Не сохранять
             </SaveBtn>
           </div>
@@ -82,7 +114,7 @@ const mapStateToProps = (state: any) => ({
   important: state.important,
 });
 
-export default connect(mapStateToProps, null)(EditSearch);
+export default connect(mapStateToProps, { editFavorite })(EditSearch);
 
 const Center = styled.div`
   display: grid;
