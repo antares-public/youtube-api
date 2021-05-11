@@ -1,37 +1,38 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { ITokenState } from "../interfaces";
 import Navbar from "./../components/Navbar";
 import styled from "styled-components";
 import { deleteImportant } from "../Actions/DeleteImportant";
 
 const Favorites = ({ currentToken, important, deleteImportant }: any) => {
+  let history = useHistory();
   if (!currentToken) {
     return <Redirect to="/login" />;
   }
 
   const removeHandler = (id: number) => {
-    // console.log(important.filter((e: { id: number }) => e.id !== id));
-    // полученный массив отправить в localstorage и в dispatch отравить в state
     deleteImportant(important.filter((e: { id: number }) => e.id !== id));
   };
 
-  const changeHandler = () => {
-    console.log("change");
+  const changeHandler = (id: number) => {
+    // return <Redirect to={`/favorites/${id}`} />;
+    return history.push(`/favorites/${id}`);
   };
 
+  // при клике на ссылку мы переходим по url на поиск и там с помощью useHistory забираем данные
   return (
     <>
       <Navbar />
       <Container>
         <h1>Избранное</h1>
         <FavoritesList>
-          {important?.map((e: { id: number; keywords: string }, i: number) => (
-            <div className="active" key={i}>
+          {important?.map((e: { id: number; keywords: string }) => (
+            <div className="active" key={e.id}>
               {e.keywords}
               <div className="hover">
-                <a onClick={changeHandler}>Изменить</a>
+                <a onClick={() => changeHandler(e.id)}>Изменить</a>
                 <a
                   onClick={() => removeHandler(e.id)}
                   style={{ marginLeft: "10px", color: "red" }}
