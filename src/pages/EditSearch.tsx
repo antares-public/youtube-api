@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { Redirect, useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import { editFavorite } from "../Actions/editImportant";
 import { Input, Button, Slider, Select, Col, Row, InputNumber } from "antd";
@@ -20,8 +20,8 @@ const EditSearch: React.FC<{ important: any; editFavorite: any }> = ({
   const history = useHistory();
 
   useEffect(() => {
-    important.filter((e: any) => e.id == id && setCurrentSearch(e));
-  }, []);
+    important.filter((e: any) => e.id === id && setCurrentSearch(e));
+  }, [important, id]);
 
   useEffect(() => {
     localStorage.setItem("favorite", JSON.stringify(important));

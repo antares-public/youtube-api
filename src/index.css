@@ -12,6 +12,12 @@ h1 {
   margin: 0;
 }
 
+button {
+  color: #1890ff;
+  background-color: transparent;
+  border: none;
+}
+
 /* Navigation */
 .nav_link {
   display: inline;

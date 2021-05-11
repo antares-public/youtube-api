@@ -18,7 +18,7 @@ export default function FavoriteReducer(
       return JSON.parse(localStorage.getItem("favorite") || "[]");
     case EDIT_FAVORITE:
       return state.map((e: any) => {
-        if (action.search.id == e.id) {
+        if (action.search.id.toNumber() === e.id.toNumber()) {
           e = action.search;
           return e;
         }

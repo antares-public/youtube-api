@@ -17,11 +17,9 @@ const Favorites = ({ currentToken, important, deleteImportant }: any) => {
   };
 
   const changeHandler = (id: number) => {
-    // return <Redirect to={`/favorites/${id}`} />;
     return history.push(`/favorites/${id}`);
   };
 
-  // при клике на ссылку мы переходим по url на поиск и там с помощью useHistory забираем данные
   return (
     <>
       <Navbar />
@@ -32,13 +30,13 @@ const Favorites = ({ currentToken, important, deleteImportant }: any) => {
             <div className="active" key={e.id}>
               {e.keywords}
               <div className="hover">
-                <a onClick={() => changeHandler(e.id)}>Изменить</a>
-                <a
+                <button onClick={() => changeHandler(e.id)}>Изменить</button>
+                <button
                   onClick={() => removeHandler(e.id)}
                   style={{ marginLeft: "10px", color: "red" }}
                 >
                   Удалить
-                </a>
+                </button>
               </div>
             </div>
           ))}
