@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory, NavLink } from "react-router-dom";
 import { ITokenState } from "../interfaces";
 import Navbar from "./../components/Navbar";
 import styled from "styled-components";
@@ -28,7 +28,7 @@ const Favorites = ({ currentToken, important, deleteImportant }: any) => {
         <h1>Избранное</h1>
         <FavoritesList>
           {important?.map((e: IFavoriteState) => (
-            <div className="active" key={e.id}>
+            <Link to={`/search${e.keywords}`} className="active" key={e.id}>
               {e.name}
               <div className="hover">
                 <button onClick={() => changeHandler(Number(e.id))}>
@@ -41,7 +41,7 @@ const Favorites = ({ currentToken, important, deleteImportant }: any) => {
                   Удалить
                 </button>
               </div>
-            </div>
+            </Link>
           ))}
         </FavoritesList>
       </Container>
@@ -60,25 +60,26 @@ const Container = styled.div`
   padding: 40px 200px;
 `;
 
+const Link = styled(NavLink)`
+  padding: 10px;
+  margin: 0;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+
+  border-top: 1px solid #f8f8f8;
+  transition: 0.5s;
+
+  &:hover {
+    color: black;
+    background-color: #c5c5c5;
+  }
+
+  &:first-child {
+    border: none;
+  }
+`;
+
 const FavoritesList = styled.div`
   background-color: #fff;
-
-  > div {
-    padding: 10px;
-    margin: 0;
-
-    display: flex;
-    justify-content: space-between;
-
-    border-top: 1px solid #f8f8f8;
-    transition: 0.5s;
-
-    &:hover {
-      background-color: #c5c5c5;
-    }
-
-    &:first-child {
-      border: none;
-    }
-  }
 `;

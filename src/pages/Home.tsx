@@ -3,7 +3,7 @@ import { Input, Tooltip } from "antd";
 import { VideoList } from "../components/VideoList";
 import { VideoTable } from "../components/VideoTable";
 import styled from "styled-components";
-import { Redirect, NavLink } from "react-router-dom";
+import { Redirect, NavLink, useParams } from "react-router-dom";
 import { MenuOutlined, TableOutlined, HeartTwoTone } from "@ant-design/icons";
 import { ITokenState } from "../interfaces";
 import Navbar from "./../components/Navbar";
@@ -15,8 +15,9 @@ const Home: React.FC<{
   currentToken?: string | null;
   important: IFavoriteState[];
 }> = ({ currentToken, important }) => {
+  const { q } = useParams<any>();
   const [video, setVideo] = useState<any>();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(q);
 
   const [table, setTable] = useState<boolean>(false);
 
@@ -60,6 +61,7 @@ const Home: React.FC<{
           placeholder="Что нужно посмотреть?"
           enterButton="Найти"
           size="large"
+          // defaultValue={q}
           suffix={
             <Tooltip
               placement="bottom"

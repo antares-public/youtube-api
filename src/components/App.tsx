@@ -13,7 +13,9 @@ export const App: React.FC = () => (
 
       <div>
         <Route path="/search" exact component={Home} />
-        <Route path="/" exact component={Home} />
+        {/* <Route path="/search/:id" component={Home} /> */}
+        <Route path="/search:q" component={Home} />
+
         <Route path="/favorites" exact component={Favorites} />
         <Route path="/favorites/:id" component={EditSearch} />
       </div>
