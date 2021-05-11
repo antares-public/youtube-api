@@ -14,7 +14,7 @@ const Favorites = ({ currentToken, important, deleteImportant }: any) => {
   }
 
   const removeHandler = (id: number) => {
-    deleteImportant(important.filter((e: { id: number }) => e.id !== id));
+    deleteImportant(important.filter((e: { id: number }) => e.id != id));
   };
 
   const changeHandler = (id: number) => {
@@ -28,8 +28,8 @@ const Favorites = ({ currentToken, important, deleteImportant }: any) => {
         <h1>Избранное</h1>
         <FavoritesList>
           {important?.map((e: IFavoriteState) => (
-            <Link to={`/search${e.keywords}`} className="active" key={e.id}>
-              {e.name}
+            <div className="active" key={e.id}>
+              <Link to={`/search?${e.keywords}`}>{e.name}</Link>
               <div className="hover">
                 <button onClick={() => changeHandler(Number(e.id))}>
                   Изменить
@@ -41,7 +41,7 @@ const Favorites = ({ currentToken, important, deleteImportant }: any) => {
                   Удалить
                 </button>
               </div>
-            </Link>
+            </div>
           ))}
         </FavoritesList>
       </Container>
@@ -61,25 +61,32 @@ const Container = styled.div`
 `;
 
 const Link = styled(NavLink)`
-  padding: 10px;
-  margin: 0;
   color: black;
-  display: flex;
-  justify-content: space-between;
-
-  border-top: 1px solid #f8f8f8;
-  transition: 0.5s;
-
   &:hover {
     color: black;
-    background-color: #c5c5c5;
-  }
-
-  &:first-child {
-    border: none;
   }
 `;
 
 const FavoritesList = styled.div`
   background-color: #fff;
+
+  > div {
+    padding: 10px;
+    margin: 0;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+
+    border-top: 1px solid #f8f8f8;
+    transition: 0.5s;
+
+    &:hover {
+      color: black;
+      background-color: #c5c5c5;
+    }
+
+    &:first-child {
+      border: none;
+    }
+  }
 `;
