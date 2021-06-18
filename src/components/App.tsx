@@ -9,7 +9,7 @@ import EditSearch from "../pages/EditSearch";
 export const App: React.FC = () => (
   <Switch>
     <>
-      <Route path="/login" component={Login} />
+      <Route path="/" component={Login} />
 
       <div>
         <Route path="/search" exact component={Home} />
