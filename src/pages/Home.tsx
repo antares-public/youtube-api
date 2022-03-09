@@ -1,9 +1,9 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Input, Tooltip } from "antd";
 import { VideoList } from "../components/VideoList";
 import { VideoTable } from "../components/VideoTable";
 import styled from "styled-components";
-import { Redirect, NavLink, useParams } from "react-router-dom";
+import { Redirect, NavLink, useParams, useHistory } from "react-router-dom";
 import { MenuOutlined, TableOutlined, HeartTwoTone } from "@ant-design/icons";
 import { ITokenState } from "../interfaces";
 import Navbar from "./../components/Navbar";
@@ -17,10 +17,14 @@ const Home: React.FC<{
   important: IFavoriteState[];
 }> = ({ currentToken, important }) => {
   const { id } = useParams<{ id: string }>();
+  const history = useHistory();
   const [video, setVideo] = useState<any>();
-  const [search, setSearch] = useState(id);
 
   const [table, setTable] = useState<boolean>(false);
+
+  useEffect(() => {
+    searchYoutube(id);
+  }, []);
 
   if (!currentToken) {
     return <Redirect to="/login" />;
@@ -42,13 +46,12 @@ const Home: React.FC<{
       setVideo(await video.json());
     }
   }
-
   const saveImportantSearch = async () => {
     important.push({
       id: Date.now().toString(),
-      keywords: search,
+      keywords: id,
       count: 12,
-      name: search,
+      name: id,
     });
     await localStorage.setItem("favorite", JSON.stringify(important));
   };
@@ -75,14 +78,20 @@ const Home: React.FC<{
               <Heart onClick={() => saveImportantSearch()} />
             </Tooltip>
           }
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onSearch={() => searchYoutube(search)}
+          value={id}
+          onChange={(e) => {
+            if (history.location.pathname === "/search") {
+              history.push(`/search/${e.target.value}`);
+            } else {
+              history.push(`${e.target.value}`);
+            }
+            searchYoutube(id);
+          }}
         />
         {video && (
           <>
             <Header>
-              {search && <Title>Видео по запросу «{search}»</Title>}
+              {id && <Title>Видео по запросу «{id}»</Title>}
               <div>
                 <Line onClick={() => setTable(false)} />
                 <Table onClick={() => setTable(true)} />
