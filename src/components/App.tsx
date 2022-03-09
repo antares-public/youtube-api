@@ -11,6 +11,7 @@ export const App: React.FC = () => (
     <>
       <Route path="/" exact component={Login} />
       <Route path="/search/:id" component={Home} />
+      <Route path="/search" exact component={Home} />
 
       <Route path="/favorites" exact component={Favorites} />
       <Route path="/favorites/:id" component={EditSearch} />
