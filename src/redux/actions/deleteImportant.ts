@@ -1,5 +1,5 @@
-import { DELETE_FAVORITE } from "./ActionTypes";
-import { IFavoriteState } from "../interfaces";
+import { DELETE_FAVORITE } from "../actionTypes";
+import { IFavoriteState } from "../../interfaces";
 
 export const deleteImportant =
   (important: IFavoriteState[]) =>

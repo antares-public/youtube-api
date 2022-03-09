@@ -8,7 +8,7 @@ export const VideoTable: React.FC<{
     {video?.items?.map((e: any) => {
       return (
         <Item key={e.id.videoId}>
-          <img src={e.snippet.thumbnails.medium.url} alt="" width="350" />
+          <img src={e.snippet.thumbnails.medium.url} alt="" />
 
           <ItemContent>
             <a href={`https://youtu.be/${e.id.videoId}`}>{e.snippet.title}</a>
@@ -24,13 +24,23 @@ export const VideoTable: React.FC<{
 );
 
 const YoutubeList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: center;
+
+  @media (max-width: 600px) {
+    justify-content: center;
+  }
 `;
 
 const Item = styled.div`
-  max-width: 350px;
+  max-width: 300px;
+  margin: 5px;
+
+  > img {
+    min-width: 200px;
+  }
 `;
 
 const ItemContent = styled.div`

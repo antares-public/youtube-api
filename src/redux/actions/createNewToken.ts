@@ -1,4 +1,4 @@
-import { NEW_USER_TOKEN } from "./ActionTypes";
+import { NEW_USER_TOKEN } from "../actionTypes";
 
 export const createNewToken =
   (token: string) =>

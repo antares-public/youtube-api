@@ -1,4 +1,4 @@
-import { SAVE_TO_FAVORITE } from "./ActionTypes";
+import { SAVE_TO_FAVORITE } from "../actionTypes";
 
 export const saveToFavorite =
   (keywords: string) =>

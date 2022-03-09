@@ -1,5 +1,5 @@
-import { ITokenState, ITokenAction } from "./../interfaces";
-import { NEW_USER_TOKEN, REMOVE_USER_TOKEN } from "./../Actions/ActionTypes";
+import { ITokenState, ITokenAction } from "../../interfaces";
+import { NEW_USER_TOKEN, REMOVE_USER_TOKEN } from "../actionTypes";
 
 const initialState: ITokenState = { token: localStorage.getItem("user") };
 

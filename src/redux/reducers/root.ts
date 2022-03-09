@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import FavoriteReducer from "./FavoriteReducer";
-import InitReducer from "./InitReducer";
+import FavoriteReducer from "./favorite";
+import InitReducer from "./init";
 
 export const RootReducer = combineReducers({
   auth: InitReducer,

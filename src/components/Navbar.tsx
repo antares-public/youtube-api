@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import styled from "styled-components";
-
-import { removeToken } from "../Actions/RemoveToken";
+import { removeToken } from "../redux/actions/removeToken";
 
 const Navbar: React.FC<{ removeToken: () => void }> = ({ removeToken }) => {
   return (
@@ -50,4 +49,11 @@ const Menu = styled.div`
   padding: 0 150px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(150, 150, 150, 0.5);
+
+  @media (max-width: 800px) {
+    padding: 0 15px;
+  }
+  @media (max-width: 400px) {
+    padding: 0 5px;
+  }
 `;

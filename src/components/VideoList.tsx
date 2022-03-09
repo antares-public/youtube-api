@@ -8,7 +8,7 @@ export const VideoList: React.FC<{
     {video?.items?.map((e: any) => {
       return (
         <Item key={e.id.videoId}>
-          <img src={e.snippet.thumbnails.medium.url} alt="" width="300" />
+          <img src={e.snippet.thumbnails.medium.url} alt="" />
 
           <ItemContent>
             <a
@@ -36,6 +36,19 @@ export const VideoList: React.FC<{
 const Item = styled.div`
   display: flex;
   margin-bottom: 20px;
+
+  > img {
+    width: 300px;
+
+    min-width: 200px;
+  }
+
+  @media (max-width: 800px) {
+    > img {
+      width: 200px;
+      height: 100px;
+    }
+  }
 `;
 
 const ItemContent = styled.div`

@@ -6,11 +6,11 @@ import "./index.css";
 import "antd/dist/antd.css";
 
 import { App } from "./components/App";
-import Store from "./Store";
+import store from "./redux/store";
 
 ReactDOM.render(
   <BrowserRouter>
-    <Provider store={Store}>
+    <Provider store={store}>
       <App />
     </Provider>
   </BrowserRouter>,

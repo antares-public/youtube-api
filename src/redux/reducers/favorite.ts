@@ -3,8 +3,8 @@ import {
   CLEAR_DATA,
   DELETE_FAVORITE,
   EDIT_FAVORITE,
-} from "../Actions/ActionTypes";
-import { IFavoriteState, IFavoriteAction } from "../interfaces";
+} from "../actionTypes";
+import { IFavoriteState, IFavoriteAction } from "../../interfaces";
 
 const initialState: IFavoriteState[] = JSON.parse(
   localStorage.getItem("favorite") || "[]"

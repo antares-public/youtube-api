@@ -10,14 +10,15 @@ import Navbar from "./../components/Navbar";
 import { IFavoriteState } from "../interfaces";
 
 import { connect } from "react-redux";
+import { Container } from "../styles";
 
 const Home: React.FC<{
   currentToken?: string | null;
   important: IFavoriteState[];
 }> = ({ currentToken, important }) => {
-  const { q } = useParams<any>();
+  const { id } = useParams<{ id: string }>();
   const [video, setVideo] = useState<any>();
-  const [search, setSearch] = useState(q);
+  const [search, setSearch] = useState(id);
 
   const [table, setTable] = useState<boolean>(false);
 
@@ -61,7 +62,6 @@ const Home: React.FC<{
           placeholder="Что нужно посмотреть?"
           enterButton="Найти"
           size="large"
-          // defaultValue={q}
           suffix={
             <Tooltip
               placement="bottom"
@@ -82,7 +82,7 @@ const Home: React.FC<{
         {video && (
           <>
             <Header>
-              {search && <h1>Видео по запросу «{search}»</h1>}
+              {search && <Title>Видео по запросу «{search}»</Title>}
               <div>
                 <Line onClick={() => setTable(false)} />
                 <Table onClick={() => setTable(true)} />
@@ -109,6 +109,12 @@ export default connect(mapStateToProps, null)(Home);
 
 const Heart = styled(HeartTwoTone)``;
 
+const Title = styled.h1`
+  @media (max-width: 500px) {
+    font-size: 15px;
+  }
+`;
+
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -121,12 +127,6 @@ const Table = styled(TableOutlined)`
   margin-left: 20px;
 `;
 
-const Container = styled.div`
-  overflow-y: auto;
-
-  text-align: center;
-  padding: 40px 200px;
-`;
 const Search = styled(Input.Search)`
   margin-bottom: 20px;
 `;

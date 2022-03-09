@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { Input, Button } from "antd";
 import styled from "styled-components";
 
-import { createNewToken } from "../Actions/CreateNewToken";
+import { createNewToken } from "../redux/actions/createNewToken";
 import { ITokenState } from "../interfaces";
 import users from "../users.json";
 
@@ -15,8 +15,8 @@ type LoginProps = {
 };
 
 const Login: React.FC<LoginProps> = ({ currentToken, createNewToken }) => {
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
+  const [login, setLogin] = useState("admin");
+  const [password, setPassword] = useState("1234");
 
   if (currentToken) {
     return <Redirect to="/search" />;

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useHistory, useParams } from "react-router-dom";
 import { connect } from "react-redux";
-import { editFavorite } from "../Actions/EditImportant";
+import { editFavorite } from "../redux/actions/editImportant";
 import { Input, Button, Slider, Select, Col, Row, InputNumber } from "antd";
 import { IFavoriteState } from "../interfaces";
 

@@ -1,5 +1,5 @@
-import { EDIT_FAVORITE } from "./ActionTypes";
-import { IFavoriteState } from "../interfaces";
+import { EDIT_FAVORITE } from "../actionTypes";
+import { IFavoriteState } from "../../interfaces";
 
 export const editFavorite =
   (search: IFavoriteState) =>

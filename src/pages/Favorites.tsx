@@ -4,8 +4,9 @@ import { Redirect, useHistory, NavLink } from "react-router-dom";
 import { ITokenState } from "../interfaces";
 import Navbar from "./../components/Navbar";
 import styled from "styled-components";
-import { deleteImportant } from "../Actions/DeleteImportant";
+import { deleteImportant } from "../redux/actions/deleteImportant";
 import { IFavoriteState } from "../interfaces";
+import { Container } from "../styles";
 
 const Favorites = ({ currentToken, important, deleteImportant }: any) => {
   let history = useHistory();
@@ -14,7 +15,7 @@ const Favorites = ({ currentToken, important, deleteImportant }: any) => {
   }
 
   const removeHandler = (id: number) => {
-    deleteImportant(important.filter((e: { id: number }) => e.id != id));
+    deleteImportant(important.filter((e: { id: number }) => e.id !== id));
   };
 
   const changeHandler = (id: number) => {
@@ -27,9 +28,12 @@ const Favorites = ({ currentToken, important, deleteImportant }: any) => {
       <Container>
         <h1>Избранное</h1>
         <FavoritesList>
+          {!important.length && (
+            <p style={{ backgroundColor: "#f8f8f8" }}>Тут ничего нет.</p>
+          )}
           {important?.map((e: IFavoriteState) => (
             <div className="active" key={e.id}>
-              <Link to={`/search?${e.keywords}`}>{e.name}</Link>
+              <Link to={`/search/${e.keywords}`}>{e.name}</Link>
               <div className="hover">
                 <button onClick={() => changeHandler(Number(e.id))}>
                   Изменить
@@ -55,10 +59,6 @@ const mapStateToProps = (state: { auth: ITokenState; important: [] }) => ({
 });
 
 export default connect(mapStateToProps, { deleteImportant })(Favorites);
-
-const Container = styled.div`
-  padding: 40px 200px;
-`;
 
 const Link = styled(NavLink)`
   color: black;
